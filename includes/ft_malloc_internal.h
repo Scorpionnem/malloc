@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 15:43:00 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 22:50:21 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ typedef struct	s_malloc
 	t_zone	*medium_zones;
 	t_zone	*large_zones;
 }	t_malloc;
+
+/*
+	Macro used to align the memory, for example in the header of memory blocks:
+
+	size_t header_size = ALIGN_UP(sizeof(t_block), alignof(max_align_t));
+
+	header_size % alignof(max_align_t) == 0
+	for memory to be aligned this needs to be true
+*/
+#define ALIGN_MEMORY(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
 
 extern t_malloc	g_malloc;
 

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 01:56:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 15:27:33 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 22:57:42 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@
 
 	block:
 		Blocks store the adresses that are returned to the user aswell as the size of the zones
+            [HEADER-----------------------------------------------------HEADER]
+		-> [[size][adress to block of memory][used state][adress to next block] [actual memory (returned to the user)]]
 
-		-> [[size] [adress to block of memory] [used state] [adress to next block]]
-	
 		-> size: size of the usable memory
 		-> adress: adress of the start of the usable memory
 		-> used: is the block used?
 		-> next: next block
+
+
 */
 
 # include <stddef.h>

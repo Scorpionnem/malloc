@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:29:06 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 12:46:44 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 22:39:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_block	*new_block(t_block *addr, size_t size)
 	t_block	*res = addr;
 
 	res->size = size;
-	res->adress = (void*)(res + sizeof(t_block));
+	res->adress = (void*)((uint8_t*)res + sizeof(t_block));
 	res->next = NULL;
 	res->used = false;
 	return (res);
@@ -56,7 +56,7 @@ t_block	*new_block(t_block *addr, size_t size)
 t_block	*get_last_block(t_zone *zone)
 {
 	t_block	*it = zone->blocks;
-	
+
 	if (!it)
 		return (NULL);
 	while (it->next)

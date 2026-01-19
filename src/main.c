@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:09:42 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 02:00:27 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 02:08:23 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,19 @@ t_block	*create_block(t_zone *zone, size_t size)
 
 /*
 	mmap zones that will dispatch blocks.
+
+	when you call malloc, it will "assign a zone" size to the call.
+
+	From it, it will find an available zone, if it cant, it allocates a new one of appropriate size.
+
+	then in the found zone it tries to find a block thats not used and thats >= the asked size
+	if it cant find the block, it adds it to the zone
+
+	large zones can probably just be a list of blocks instead of list of zones since the zone will only fit 1 block
+
+	to free, just set the used flag to false
+
+	if all blocks in the zone are unused, munmap?
 
 	zone                                                   V .blocks points here
 	-> [[size][adress to first block][adress to next zone][blocks]]

@@ -8,7 +8,10 @@ NAME = malloc
 SRCS =	src/main.c\
 		src/block.c\
 		src/zone.c\
-		src/print.c
+		src/print.c\
+		src/malloc.c\
+		src/free.c\
+		src/realloc.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

@@ -6,13 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:29:00 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 13:57:00 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 14:43:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc_internal.h"
 
-size_t	get_pages_count(size_t size)
+static size_t	get_pages_count(size_t size)
 {
 	if (size <= SMALL_ALLOC_SIZE)
 		return (SMALL_PAGES);
@@ -24,7 +24,7 @@ size_t	get_pages_count(size_t size)
 	return (size / page_size + 1);
 }
 
-size_t	get_blocks_size(size_t size)
+static size_t	get_blocks_size(size_t size)
 {
 	if (size <= SMALL_ALLOC_SIZE)
 		return (SMALL_ALLOC_SIZE);
@@ -33,7 +33,7 @@ size_t	get_blocks_size(size_t size)
 	return (size);
 }
 
-size_t	get_blocks_count(size_t size)
+static size_t	get_blocks_count(size_t size)
 {
 	if (size <= SMALL_ALLOC_SIZE)
 		return (SMALL_BLOCKS_COUNT);

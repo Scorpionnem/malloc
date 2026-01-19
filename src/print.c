@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:29:57 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 13:56:21 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 14:56:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	print_blocks(t_block *block)
 {
+	if (!block->used)
+		return ;
 	printf("BLOCK: %p SIZE: %ld USED: %d\n", block, block->size, block->used);
 	for (size_t i = 0; i < block->size; i++)
 		printf("%x ", *(uint8_t*)(block->adress + i));
 	printf("\n");
-	if (block->next && block->next->used)
+	if (block->next)
 		print_blocks(block->next);
 }
 

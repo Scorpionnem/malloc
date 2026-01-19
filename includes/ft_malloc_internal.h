@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 13:56:40 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 14:42:30 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_malloc
 	t_zone	*medium_zones;
 	t_zone	*large_zones;
 }	t_malloc;
+
+extern t_malloc	g_malloc;
 
 // 127 blocks of 64 (allocs of 32)
 #define SMALL_ALLOC_SIZE 32

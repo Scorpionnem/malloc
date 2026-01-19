@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 14:42:30 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:00 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ typedef struct	s_malloc
 extern t_malloc	g_malloc;
 
 // 127 blocks of 64 (allocs of 32)
-#define SMALL_ALLOC_SIZE 32
-#define SMALL_BLOCKS_COUNT 127
-#define SMALL_PAGES 2
+#define SMALL_ALLOC_SIZE 96
+#define SMALL_BLOCKS_COUNT 1024
+#define SMALL_PAGES 4
 
 // 127 blocks of 128 (allocs of 96)
-#define MEDIUM_ALLOC_SIZE 96
-#define MEDIUM_BLOCKS_COUNT 127
-#define MEDIUM_PAGES 4
+#define MEDIUM_ALLOC_SIZE 992
+#define MEDIUM_BLOCKS_COUNT 1024
+#define MEDIUM_PAGES 32
 
 void	print_blocks(t_block *block);
 void	print_zones(char *id, t_zone *zone);

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 14:48:43 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:44:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_zone	**get_zone(size_t size)
 	return (&g_malloc.large_zones);
 }
 
-void	*ft_malloc(size_t size)
+void	*malloc(size_t size)
 {
 	t_zone	**zone = get_zone(size);
 	zone = find_available_zone(zone, size);

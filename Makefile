@@ -1,12 +1,16 @@
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
 INCLUDES = -I includes
 
-NAME = malloc
-#NAME = libft_malloc_.so
-SRCS =	src/main.c\
-		src/block.c\
+NAME = libft_malloc_$(HOSTTYPE).so
+NAMELINK = libft_malloc.so
+
+SRCS =	src/block.c\
 		src/zone.c\
 		src/print.c\
 		src/malloc.c\
@@ -17,21 +21,22 @@ OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
-all:
-	@make -j compile --no-print-directory
-
-compile: $(NAME)
+all: $(NAME) $(NAMELINK)
 
 re: fclean all
 
+$(NAMELINK):
+	@echo Created symbolic link $(NAMELINK)
+	@ln -s $(NAME) $(NAMELINK)
+
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	@$(CC) -shared $(CFLAGS) $(INCLUDES) -o $@ $^
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@echo Compiling $<
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) -fPIC $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@echo Cleaning objects
@@ -40,6 +45,7 @@ clean:
 fclean: clean
 	@echo Cleaning $(NAME)
 	@rm -rf $(NAME)
+	@rm -rf $(NAMELINK)
 
 run: $(NAME)
 	./$(NAME)

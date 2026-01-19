@@ -6,11 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:09:42 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 14:56:34 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:31 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc_internal.h"
+#include "includes/ft_malloc_internal.h"
 
 /*
 	zone:
@@ -35,15 +35,9 @@
 
 int	main(void)
 {
-	ft_malloc(16);
-	ft_malloc(16);
-	ft_malloc(64);
-	ft_malloc(500);
-	ft_malloc(420);
-
-	print_zones("SMALL", g_malloc.small_zones);
-	printf("\n");
-	print_zones("MEDIUM", g_malloc.medium_zones);
-	printf("\n");
-	print_zones("LARGE", g_malloc.large_zones);
+	malloc(16);
+	malloc(16);
+	malloc(64);
+	malloc(500);
+	malloc(420);
 }

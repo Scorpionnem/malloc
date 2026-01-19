@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:47:35 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 15:03:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:42:58 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_block	*find_block_addr(void *addr)
 	return (NULL);
 }
 
-void	ft_free(void *addr)
+void	free(void *addr)
 {
 	if (!addr)
 		return ;

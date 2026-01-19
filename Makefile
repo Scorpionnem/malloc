@@ -5,7 +5,10 @@ INCLUDES = -I includes
 
 NAME = malloc
 #NAME = libft_malloc_.so
-SRCS =	src/main.c
+SRCS =	src/main.c\
+		src/block.c\
+		src/zone.c\
+		src/print.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

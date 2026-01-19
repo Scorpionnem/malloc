@@ -3,3 +3,5 @@ obj/
 *.d
 *.so
 .vscode
+en.subject.pdf
+malloc

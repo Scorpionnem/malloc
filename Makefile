@@ -11,7 +11,10 @@ OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
-all: $(NAME)
+all:
+	@make -j compile --no-print-directory
+
+compile: $(NAME)
 
 re: fclean all
 
@@ -35,6 +38,6 @@ fclean: clean
 run: $(NAME)
 	./$(NAME)
 
-.PHONY: all clean fclean run re bonus
+.PHONY: all clean fclean run re bonus compile
 
 -include $(DEPS)

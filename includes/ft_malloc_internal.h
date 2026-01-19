@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 12:54:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 13:56:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 
 # include <sys/mman.h>
+
+# include <stdio.h>
 
 typedef struct	s_block
 {
@@ -40,27 +42,23 @@ typedef struct	s_zone
 
 typedef struct	s_malloc
 {
-	t_zone	*tiny_zones;
 	t_zone	*small_zones;
+	t_zone	*medium_zones;
 	t_zone	*large_zones;
 }	t_malloc;
 
-typedef enum	e_zone_size
-{
-	ZONE_TINY,
-	ZONE_SMALL,
-	ZONE_LARGE
-}	t_zone_size;
+// 127 blocks of 64 (allocs of 32)
+#define SMALL_ALLOC_SIZE 32
+#define SMALL_BLOCKS_COUNT 127
+#define SMALL_PAGES 2
 
-typedef enum	e_block_size
-{
-	BLOCK_TINY,
-	BLOCK_SMALL,
-	BLOCK_LARGE
-}	t_block_size;
+// 127 blocks of 128 (allocs of 96)
+#define MEDIUM_ALLOC_SIZE 96
+#define MEDIUM_BLOCKS_COUNT 127
+#define MEDIUM_PAGES 4
 
 void	print_blocks(t_block *block);
-void	print_zones(t_zone *zone);
+void	print_zones(char *id, t_zone *zone);
 
 t_block	*find_block(t_zone *zone, size_t size);
 t_block	*add_block_to_zone(t_zone *zone, size_t size);

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:09:42 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 13:13:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 13:57:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,51 @@
 	block
 	-> [[size][adress to block of memory][used state][adress to next block]]
 	size is the total size of the zone counting the t_zone
+
+	Each zone must contain at least 100 blocks
+
+	sizeof(t_zone) = 24
+	sizeof(t_block) = 32
+
 */
 
-t_zone	*zone = NULL;
+t_malloc	g_malloc = {0};
+
+t_zone	**get_zone(size_t size)
+{
+	if (size <= SMALL_ALLOC_SIZE)
+		return (&g_malloc.small_zones);
+	if (size <= MEDIUM_ALLOC_SIZE)
+		return (&g_malloc.medium_zones);
+	return (&g_malloc.large_zones);
+}
 
 void	*ft_malloc(size_t size)
 {
-	if (!zone)
+	t_zone	**zone = get_zone(size);
+	if (!*zone)
 	{
-		zone = new_zone(1);
-		if (!zone)
+		*zone = new_zone(size);
+		if (!*zone)
 			return (NULL);
 	}
 
-	t_block	*res = find_block(zone, size);
+	t_block	*res = find_block(*zone, size);
 	if (!res)
 		return (NULL);
 	res->used = true;
 	return (res->adress);
 }
 
-#include <stdio.h>
-
 int	main(void)
 {
-	printf("PageSize %ld Zone size %ld Block size %ld\n", sysconf(_SC_PAGESIZE), sizeof(t_zone), sizeof(t_block));
-	char	*caca = ft_malloc(16);
+	char	*caca = ft_malloc(64);
+	caca = ft_malloc(16);
+	caca = ft_malloc(500);
 
-	caca[0] = 'c';
-	caca[1] = 'a';
-	caca[2] = 'c';
-	caca[3] = 'a';
-
-	print_zones(zone);
-
-	munmap(zone, zone->size);
+	print_zones("SMALL", g_malloc.small_zones);
+	printf("\n");
+	print_zones("MEDIUM", g_malloc.medium_zones);
+	printf("\n");
+	print_zones("LARGE", g_malloc.large_zones);
 }

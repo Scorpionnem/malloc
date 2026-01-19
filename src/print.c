@@ -6,13 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:29:57 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 13:06:39 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/19 13:56:21 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc_internal.h"
-
-#include <stdio.h>
 
 void	print_blocks(t_block *block)
 {
@@ -24,13 +22,13 @@ void	print_blocks(t_block *block)
 		print_blocks(block->next);
 }
 
-void	print_zones(t_zone *zone)
+void	print_zones(char *id, t_zone *zone)
 {
 	if (!zone)
 		return ;
-	printf("ZONE: %p SIZE: %ld\n", zone, zone->size);
+	printf("%s ZONE: %p SIZE: %ld\n", id, zone, zone->size);
 	if (zone->blocks)
 		print_blocks(zone->blocks);
 	if (zone->next)
-		print_zones(zone->next);
+		print_zones(id, zone->next);
 }

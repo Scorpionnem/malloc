@@ -66,6 +66,8 @@ static void	free_unused_zones()
 
 void	free(void *ptr)
 {
+	if (!ptr)
+		return ;
 	t_block	*block = find_block_by_adress_global(ptr);
 	if (!block || !block->used)
 	{

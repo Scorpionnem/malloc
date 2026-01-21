@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:09:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:14:33 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:39:11 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 	Checks all zones in g_malloc to find where the block to free is
 */
-static t_block	*find_block_to_free(void *addr)
+t_block	*find_block_by_adress_global(void *addr)
 {
 	t_block	*res = find_block_by_adress(g_malloc.small_zones, addr);
 	if (res)
@@ -66,7 +66,7 @@ static void	free_unused_zones()
 
 void	free(void *ptr)
 {
-	t_block	*block = find_block_to_free(ptr);
+	t_block	*block = find_block_by_adress_global(ptr);
 	if (!block || !block->used)
 	{
 		write(2, INVALID_FREE_STR, sizeof(INVALID_FREE_STR));

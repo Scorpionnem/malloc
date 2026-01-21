@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:01:41 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:39:21 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ t_block	*find_unused_block_by_size(t_zone *zone, size_t size);
 size_t	get_zone_pages(size_t blocks_size, size_t blocks_count);
 size_t	get_alloc_size(size_t alloc_size);
 size_t	get_blocks_count(size_t alloc_size);
+
+t_block	*find_block_by_adress_global(void *addr);
 
 #endif

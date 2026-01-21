@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 15:44:06 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:48:11 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,55 @@
 
 t_malloc	g_malloc = {0};
 
-/*
-	Finds/Allocate a zone
-
-	@param zone zone group to find an available zone in
-	@param size size of the user's allocation
-
-	@return pointer to the adress of the created/found node or NULL on failure
-*/
-static t_zone	**find_available_zone(t_zone **zone, size_t size)
+void	append_zone(t_zone **zone, t_zone *new_zone)
 {
 	if (!*zone)
 	{
-		*zone = new_zone(size); // Initialize NULL zone
-		if (!*zone)
-			return (NULL);
-		return (zone);
+		*zone = new_zone;
+		return ;
 	}
-	t_zone	**tmp_zone = zone;
-	t_zone	**prev_tmp_zone = NULL;
-	while ((*tmp_zone))
-	{
-		t_block	*tmp_block = (*tmp_zone)->blocks;
 
-		while (tmp_block)
-		{
-			if (!tmp_block->used)
-			{
-				return (tmp_zone); // Zone is available
-			}
-			tmp_block = tmp_block->next;
-		}
-		prev_tmp_zone = tmp_zone;
-		tmp_zone = &(*tmp_zone)->next;
-	}
-	(*prev_tmp_zone)->next = new_zone(size);
-	if (!(*prev_tmp_zone)->next)
-		return (NULL);
-	return (&(*prev_tmp_zone)->next); // Append new zone to list
+	t_zone	*it = *zone;
+	while (it->next)
+		it = it->next;
+
+	it->next = new_zone;
 }
 
-/*
-	Returns the right zone group for size
-
-	@param size size of the user's allocation
-
-	@return pointer to the adress to the first zone
-*/
-static t_zone	**get_zone(size_t size)
+void	*ft_malloc(size_t size)
 {
+	t_zone	**zone;
+
 	if (size <= SMALL_ALLOC_SIZE)
-		return (&g_malloc.small_zones);
-	if (size <= MEDIUM_ALLOC_SIZE)
-		return (&g_malloc.medium_zones);
-	return (&g_malloc.large_zones);
+		zone = &g_malloc.small_zones;
+	else if (size <= MEDIUM_ALLOC_SIZE)
+		zone = &g_malloc.medium_zones;
+	else
+		zone = &g_malloc.large_zones;
+
+	t_block	*block = find_unused_block_by_size(*zone, size);
+	if (!block)
+	{
+		size_t	alloc = get_alloc_size(size);
+		size_t	blocks = get_blocks_count(size);
+		t_zone	*new_zone = allocate_zone(alloc, blocks);
+		if (!new_zone) // NOOOO ALLOC FAIL BOZO
+			return (NULL);
+
+		append_zone(zone, new_zone);
+
+		block = find_unused_block_by_size(*zone, size);
+	}
+	block->used = true;
+	return ((void*)block + BLOCK_HEADER_SIZE);
 }
 
-void	*malloc(size_t size)
+int	main(void)
 {
-	t_zone	**zone = get_zone(size);
-	zone = find_available_zone(zone, size);
-	if (!*zone)
-		return (NULL);
-
-	t_block	*res = find_block(*zone, size);
-	if (!res) // If this happens, wtf?!
-		return (NULL);
-	res->used = true;
-	return (res->adress);
+	ft_malloc(128);
+	ft_malloc(128);
+	ft_malloc(129);
+	ft_malloc(129);
+	ft_malloc(1025);
+	ft_malloc(1025);
 }

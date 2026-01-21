@@ -5,90 +5,58 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/19 12:29:06 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 22:39:33 by mbatty           ###   ########.fr       */
+/*   Created: 2026/01/21 15:05:31 by mbatty            #+#    #+#             */
+/*   Updated: 2026/01/21 15:40:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc_internal.h"
 
+t_block	*find_unused_block_by_size(t_zone *zone, size_t size);
+t_block	*find_block_by_adress(t_zone *zone, void *addr);
+
 /*
-	Finds a block of at least size inside of given zone
+	Find a block in given zone group thats unused and at least of size size
 
-	@param zone zone to find the block in
-	@param size minimum size of block to return
-
-	@return adress of valid block if found, otherwise NULL
+	@param zone zone group to find block in
+	@param size size of block to fit
 */
-t_block	*find_block(t_zone *zone, size_t size)
+t_block	*find_unused_block_by_size(t_zone *zone, size_t size)
 {
-	t_block	*tmp = zone->blocks;
-
-	if (!tmp)
-		return (NULL);
-	while (tmp)
+	while (zone)
 	{
-		if (!tmp->used && tmp->size >= size)
-			return (tmp);
-		tmp = tmp->next;
+		t_block	*it = zone->blocks;
+	
+		while (it)
+		{
+			if (it->size >= size && !it->used)
+				return (it);
+			it = it->next;
+		}
+		zone = zone->next;
 	}
 	return (NULL);
 }
 
-t_block	*new_block(t_block *addr, size_t size)
-{
-	t_block	*res = addr;
-
-	res->size = size;
-	res->adress = (void*)((uint8_t*)res + sizeof(t_block));
-	res->next = NULL;
-	res->used = false;
-	return (res);
-}
-
 /*
-	Finds the last block in the list of blocks inside of given zone
+	Find a block in given zone group that has the same adress as addr
 
-	@param zone zone to traverse
-
-	@return returns the last block, NULL if no blocks exist in that zone
+	@param zone zone group to find block in
+	@param addr addr of block to find
 */
-t_block	*get_last_block(t_zone *zone)
+t_block	*find_block_by_adress(t_zone *zone, void *addr)
 {
-	t_block	*it = zone->blocks;
-
-	if (!it)
-		return (NULL);
-	while (it->next)
-		it = it->next;
-	return (it);
-}
-
-/*
-	Adds a new block of given size to the zone
-
-	@param zone in wich to add new block
-	@param size size of the block
-
-	@return adress of new block on success, NULL on failure
-*/
-t_block	*add_block_to_zone(t_zone *zone, size_t size)
-{
-	t_block	**tmp;
-
-	tmp = &zone->blocks;
-	if (!*tmp)
+	while (zone)
 	{
-		(*tmp) = (void*)((uint8_t*)zone + sizeof(t_zone));
-		return (new_block(*tmp, size));
+		t_block	*it = zone->blocks;
+	
+		while (it)
+		{
+			if ((void*)it == addr)
+				return (it);
+			it = it->next;
+		}
+		zone = zone->next;
 	}
-
-	t_block	*it = get_last_block(zone);
-
-	t_block	*next_adress = (void*)((uint8_t*)it + sizeof(t_block) + it->size);
-
-	t_block *res = new_block(next_adress, size);
-
-	it->next = res;
-	return (res);
+	return (NULL);
 }

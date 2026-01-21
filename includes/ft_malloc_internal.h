@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 22:50:21 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:27:37 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <unistd.h>
+# include <stddef.h>
+# include <string.h>
 
 # include <sys/mman.h>
 
@@ -26,7 +28,7 @@
 typedef struct	s_block
 {
 	size_t	size;
-	void	*adress;
+
 	bool	used;
 
 	struct s_block	*next;
@@ -55,26 +57,34 @@ typedef struct	s_malloc
 	header_size % alignof(max_align_t) == 0
 	for memory to be aligned this needs to be true
 */
+
+// alignof(max_align_t) = 16 ?? I dont have it at school
+
 #define ALIGN_MEMORY(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
+#define ZONE_HEADER_SIZE ALIGN_MEMORY(sizeof(t_zone), 16)
+#define BLOCK_HEADER_SIZE ALIGN_MEMORY(sizeof(t_block), 16)
 
 extern t_malloc	g_malloc;
 
-// 127 blocks of 64 (allocs of 32)
-#define SMALL_ALLOC_SIZE 96
-#define SMALL_BLOCKS_COUNT 1024
-#define SMALL_PAGES 4
+#define PAGE_SIZE sysconf(_SC_PAGESIZE)
 
-// 127 blocks of 128 (allocs of 96)
-#define MEDIUM_ALLOC_SIZE 992
-#define MEDIUM_BLOCKS_COUNT 1024
-#define MEDIUM_PAGES 32
+#define SMALL_BLOCKS_COUNT 128
+#define SMALL_ALLOC_SIZE 128
 
-void	print_blocks(t_block *block);
-void	print_zones(char *id, t_zone *zone);
+#define MEDIUM_BLOCKS_COUNT 128
+#define MEDIUM_ALLOC_SIZE 1024
 
-t_block	*find_block(t_zone *zone, size_t size);
-t_block	*add_block_to_zone(t_zone *zone, size_t size);
+// zone.c
+bool	is_zone_used(t_zone *zone);
+t_zone	*allocate_zone(size_t blocks_size, size_t blocks_count);
 
-t_zone	*new_zone(size_t size);
+// block.c
+t_block	*find_block_by_adress(t_zone *zone, void *addr);
+t_block	*find_unused_block_by_size(t_zone *zone, size_t size);
+
+// utils.c
+size_t	get_zone_pages(size_t blocks_size, size_t blocks_count);
+size_t	get_alloc_size(size_t alloc_size);
+size_t	get_blocks_count(size_t alloc_size);
 
 #endif

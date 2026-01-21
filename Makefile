@@ -2,7 +2,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
 INCLUDES = -I includes
@@ -10,12 +10,10 @@ INCLUDES = -I includes
 NAME = libft_malloc_$(HOSTTYPE).so
 NAMELINK = libft_malloc.so
 
-SRCS =	src/block.c\
+SRCS =	src/malloc.c\
+		src/block.c\
 		src/zone.c\
-		src/print.c\
-		src/malloc.c\
-		src/free.c\
-		src/realloc.c
+		src/utils.c\
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -31,7 +29,7 @@ $(NAMELINK):
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(CC) -shared $(CFLAGS) $(INCLUDES) -o $@ $^
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)

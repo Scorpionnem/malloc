@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 15:48:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:05:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	append_zone(t_zone **zone, t_zone *new_zone)
 	it->next = new_zone;
 }
 
-void	*ft_malloc(size_t size)
+void	*malloc(size_t size)
 {
 	t_zone	**zone;
 
@@ -54,15 +54,6 @@ void	*ft_malloc(size_t size)
 		block = find_unused_block_by_size(*zone, size);
 	}
 	block->used = true;
+	block->used_size = size;
 	return ((void*)block + BLOCK_HEADER_SIZE);
-}
-
-int	main(void)
-{
-	ft_malloc(128);
-	ft_malloc(128);
-	ft_malloc(129);
-	ft_malloc(129);
-	ft_malloc(1025);
-	ft_malloc(1025);
 }

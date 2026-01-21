@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:06:24 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 15:08:54 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 16:56:28 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,12 @@ t_zone	*allocate_zone(size_t blocks_size, size_t blocks_count)
 	t_zone	*res;
 	size_t	pages = get_zone_pages(blocks_size, blocks_count);
 
-	printf("Mapping: %zu pages (%zu) ", pages, pages * PAGE_SIZE);
-	printf("to store %zu blocks of size %zu (%zu)\n", blocks_count, blocks_size, blocks_count * blocks_size);
-
 	res = mmap(NULL, pages * PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
 	if (res == MAP_FAILED)
 		return (NULL);
 	memset(res, 0, sizeof(t_zone));
 
-	res->size = blocks_size * blocks_count;
+	res->size = pages * PAGE_SIZE;
 	create_blocks_in_zone(res, blocks_size, blocks_count);
 	return (res);
 }

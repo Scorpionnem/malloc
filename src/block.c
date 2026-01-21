@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:05:31 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 15:40:09 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 16:52:44 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_block	*find_block_by_adress(t_zone *zone, void *addr)
 	
 		while (it)
 		{
-			if ((void*)it == addr)
+			if ((void*)it + BLOCK_HEADER_SIZE == addr)
 				return (it);
 			it = it->next;
 		}

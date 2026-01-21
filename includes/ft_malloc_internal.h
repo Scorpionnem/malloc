@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 15:27:37 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:01:41 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_block
 {
 	size_t	size;
 
+	size_t	used_size;
 	bool	used;
 
 	struct s_block	*next;

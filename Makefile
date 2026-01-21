@@ -11,6 +11,8 @@ NAME = libft_malloc_$(HOSTTYPE).so
 NAMELINK = libft_malloc.so
 
 SRCS =	src/malloc.c\
+		src/free.c\
+		src/realloc.c\
 		src/block.c\
 		src/zone.c\
 		src/utils.c\
@@ -29,7 +31,7 @@ $(NAMELINK):
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	@$(CC) -shared $(CFLAGS) $(INCLUDES) -o $@ $^
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)

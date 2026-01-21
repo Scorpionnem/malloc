@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 01:56:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/19 22:57:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:13:32 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@
 
 void	*malloc(size_t size);
 void	free(void *addr);
+void	*realloc(void *ptr, size_t size);
 
 #endif

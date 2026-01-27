@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:39:21 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:33:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 # include <stdio.h>
 
+int	ft_putnbr(long n);
+int	ft_putchar(char c);
+
 typedef struct	s_block
 {
 	size_t	size;
@@ -32,15 +35,22 @@ typedef struct	s_block
 	size_t	used_size;
 	bool	used;
 
+	struct s_zone	*zone;
+
 	struct s_block	*next;
 }	t_block;
 
 typedef struct	s_zone
 {
 	size_t	size;
+	size_t	blocks_size;
+	size_t	used_blocks;
 	t_block	*blocks;
 
+	struct s_zone	*prev;
 	struct s_zone	*next;
+
+	struct s_zone	**group;
 }	t_zone;
 
 typedef struct	s_malloc
@@ -49,17 +59,6 @@ typedef struct	s_malloc
 	t_zone	*medium_zones;
 	t_zone	*large_zones;
 }	t_malloc;
-
-/*
-	Macro used to align the memory, for example in the header of memory blocks:
-
-	size_t header_size = ALIGN_UP(sizeof(t_block), alignof(max_align_t));
-
-	header_size % alignof(max_align_t) == 0
-	for memory to be aligned this needs to be true
-*/
-
-// alignof(max_align_t) = 16 ?? I dont have it at school
 
 #define ALIGN_MEMORY(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
 #define ZONE_HEADER_SIZE ALIGN_MEMORY(sizeof(t_zone), 16)

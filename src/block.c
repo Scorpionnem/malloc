@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:05:31 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 16:52:44 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:34:03 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ t_block	*find_unused_block_by_size(t_zone *zone, size_t size)
 {
 	while (zone)
 	{
-		t_block	*it = zone->blocks;
-	
-		while (it)
+		if (zone->blocks_size >= size)
 		{
-			if (it->size >= size && !it->used)
-				return (it);
-			it = it->next;
+			t_block	*it = zone->blocks;
+		
+			while (it)
+			{
+				if (!it->used)
+					return (it);
+				it = it->next;
+			}
 		}
 		zone = zone->next;
 	}
@@ -48,13 +51,16 @@ t_block	*find_block_by_adress(t_zone *zone, void *addr)
 {
 	while (zone)
 	{
-		t_block	*it = zone->blocks;
-	
-		while (it)
+		if (zone->used_blocks > 0)
 		{
-			if ((void*)it + BLOCK_HEADER_SIZE == addr)
-				return (it);
-			it = it->next;
+			t_block	*it = zone->blocks;
+		
+			while (it)
+			{
+				if ((void*)it + BLOCK_HEADER_SIZE == addr)
+					return (it);
+				it = it->next;
+			}
 		}
 		zone = zone->next;
 	}

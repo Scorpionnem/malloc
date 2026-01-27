@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:09:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:39:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:49:39 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,6 @@ t_block	*find_block_by_adress_global(void *addr)
 	return (NULL);
 }
 
-static void	free_zone(t_zone **zone)
-{
-	if (!*zone)
-		return ;
-
-	t_zone	*it = *zone;
-	t_zone	*prev = NULL;
-	t_zone	*next = it->next;
-
-	while (it)
-	{
-		next = it->next;
-		if (!is_zone_used(it))
-		{
-			munmap(it, it->size);
-			if (prev)
-				prev->next = next;
-			else
-				*zone = next;
-			break ;
-		}
-		prev = it;
-		it = next;
-	}
-}
-
-static void	free_unused_zones()
-{
-	free_zone(&g_malloc.small_zones);
-	free_zone(&g_malloc.medium_zones);
-	free_zone(&g_malloc.large_zones);
-}
-
 #define INVALID_FREE_STR "free(): invalid pointer\nrealloc(): invalid pointer\n"
 
 void	free(void *ptr)
@@ -76,5 +43,5 @@ void	free(void *ptr)
 	}
 
 	block->used = false;
-	free_unused_zones();
+	block->zone->used_blocks--;
 }

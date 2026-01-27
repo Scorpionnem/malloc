@@ -16,6 +16,7 @@ SRCS =	src/malloc.c\
 		src/block.c\
 		src/zone.c\
 		src/utils.c\
+		src/show_alloc_mem.c\
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

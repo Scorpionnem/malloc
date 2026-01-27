@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:05:40 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:30:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	append_zone(t_zone **zone, t_zone *new_zone)
 	while (it->next)
 		it = it->next;
 
+	new_zone->prev = it;
 	it->next = new_zone;
 }
 
@@ -49,11 +50,13 @@ void	*malloc(size_t size)
 		if (!new_zone) // NOOOO ALLOC FAIL BOZO
 			return (NULL);
 
+		new_zone->group = zone;
 		append_zone(zone, new_zone);
 
 		block = find_unused_block_by_size(*zone, size);
 	}
 	block->used = true;
+	block->zone->used_blocks++;
 	block->used_size = size;
 	return ((void*)block + BLOCK_HEADER_SIZE);
 }

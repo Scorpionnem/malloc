@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 01:56:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 17:13:32 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:56:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 		-> adress: adress of the start of the usable memory
 		-> used: is the block used?
 		-> next: next block
-
-
 */
 
 # include <stddef.h>
@@ -41,5 +39,6 @@
 void	*malloc(size_t size);
 void	free(void *addr);
 void	*realloc(void *ptr, size_t size);
+void	show_alloc_mem(void);
 
 #endif

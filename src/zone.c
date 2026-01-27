@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:06:24 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/21 16:56:28 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:26:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ t_zone	*allocate_zone(size_t blocks_size, size_t blocks_count)
 		return (NULL);
 	memset(res, 0, sizeof(t_zone));
 
+	res->used_blocks = 0;
 	res->size = pages * PAGE_SIZE;
+	res->blocks_size = blocks_size;
 	create_blocks_in_zone(res, blocks_size, blocks_count);
 	return (res);
 }
@@ -51,6 +53,7 @@ void	create_blocks_in_zone(t_zone *zone, size_t blocks_size, size_t blocks_count
 	zone->blocks = (void*)zone + ZONE_HEADER_SIZE;
 	memset(zone->blocks, 0, sizeof(t_block));
 	zone->blocks->size = blocks_size;
+	zone->blocks->zone = zone;
 
 	t_block	*prev = zone->blocks;
 	t_block	*tmp = (void*)prev + BLOCK_HEADER_SIZE + prev->size;
@@ -61,6 +64,7 @@ void	create_blocks_in_zone(t_zone *zone, size_t blocks_size, size_t blocks_count
 
 		memset(tmp, 0, sizeof(t_block));
 		tmp->size = blocks_size;
+		tmp->zone = zone;
 
 		prev = tmp;
 		tmp = (void*)prev + BLOCK_HEADER_SIZE + prev->size;

@@ -6,22 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:56:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 14:19:35 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:20:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc_internal.h"
-
-/*
-	TINY : 0xA0000
-	0xA0020 - 0xA004A : 42 bytes
-	0xA006A - 0xA00BE : 84 bytes
-	SMALL : 0xAD000
-	0xAD020 - 0xADEAD : 3725 bytes
-	LARGE : 0xB0000
-	0xB0020 - 0xBBEEF : 48847 bytes
-	Total : 52698 bytes
-*/
 
 # define NIL_STR		"(nil)"
 # define LOWER_HEX		"0123456789abcdef"

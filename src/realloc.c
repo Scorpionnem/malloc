@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 16:57:42 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:30:10 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:13:49 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*realloc(void *ptr, size_t size)
 	if (!res)
 		return (NULL);
 	size_t	move_size = block->used_size > size ? size : block->used_size;
-	memmove(res, blk, move_size);
+	ft_memmove(res, blk, move_size);
 	dumb_compiler(blk);
 	return (res);
 }

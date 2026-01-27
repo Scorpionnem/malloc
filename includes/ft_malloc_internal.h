@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:33:09 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:13:45 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include <stdio.h>
 
-int	ft_putnbr(long n);
-int	ft_putchar(char c);
+void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memmove(void *dest, const void *src, size_t n);
 
 typedef struct	s_block
 {

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:05:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:32:50 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:13:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,41 @@ size_t	get_blocks_count(size_t alloc_size)
 	return (1);
 }
 
-int	ft_putchar(char c)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	return (write(1, &c, 1));
+	unsigned char	*str;
+
+	str = (unsigned char *) s;
+	while (n--)
+	{
+		*str++ = (unsigned char) c;
+	}
+	return (s);
 }
 
-int	ft_putnbr(long n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	if (n < 0)
-		return (write(1, "-", 1) + ft_putnbr(n * -1));
-	if (n >= 0 && n <= 9)
-		return (ft_putchar(n % 10 + '0'));
-	return (ft_putnbr(n / 10) + ft_putnbr(n % 10));
+	size_t	i;
+
+	i = 0;
+	if (!dest && !src)
+		return (NULL);
+	if (dest <= src)
+	{
+		while (i < n)
+		{
+			*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+			i++;
+		}
+	}
+	else if (dest > src)
+	{
+		i = n - 1;
+		while ((int)i >= 0)
+		{
+			*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+			i--;
+		}
+	}
+	return (dest);
 }

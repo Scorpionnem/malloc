@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:05:31 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:34:03 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:56:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ t_block	*find_unused_block_by_size(t_zone *zone, size_t size)
 	{
 		if (zone->blocks_size >= size)
 		{
+			if (zone->used_blocks == zone->created_blocks)
+				append_block_in_zone(zone);
 			t_block	*it = zone->blocks;
-		
+
 			while (it)
 			{
 				if (!it->used)

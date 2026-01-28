@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 11:26:24 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:05:21 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ typedef struct	s_zone
 	size_t	size;
 	size_t	blocks_size;
 	size_t	used_blocks;
+	size_t	created_blocks;
+	size_t	max_blocks;
 	t_block	*blocks;
+	t_block	*last;
 
 	struct s_zone	*prev;
 	struct s_zone	*next;
@@ -77,7 +80,6 @@ extern t_malloc	g_malloc;
 #define MEDIUM_ALLOC_SIZE 1024
 
 // zone.c
-bool	is_zone_used(t_zone *zone);
 t_zone	*allocate_zone(size_t blocks_size, size_t blocks_count);
 
 // block.c
@@ -93,5 +95,8 @@ t_block	*find_block_by_adress_global(void *addr);
 
 void	*locked_malloc(size_t size);
 void	locked_free(void *addr);
+void	append_block_in_zone(t_zone *zone);
+
+int	ft_putnbr(long n);
 
 #endif

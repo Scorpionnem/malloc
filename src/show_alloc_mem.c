@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:56:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 11:24:58 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:57:31 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_putchar(char c)
 	return (write(1, &c, 1));
 }
 
-static int	ft_putnbr(long n)
+int	ft_putnbr(long n)
 {
 	if (n < 0)
 		return (write(1, "-", 1) + ft_putnbr(n * -1));

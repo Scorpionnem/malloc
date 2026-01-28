@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:30:06 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:29:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	append_zone(t_zone **zone, t_zone *new_zone)
 	it->next = new_zone;
 }
 
-void	*malloc(size_t size)
+void	*locked_malloc(size_t size)
 {
 	t_zone	**zone;
 
@@ -59,4 +59,12 @@ void	*malloc(size_t size)
 	block->zone->used_blocks++;
 	block->used_size = size;
 	return ((void*)block + BLOCK_HEADER_SIZE);
+}
+
+void	*malloc(size_t size)
+{
+	pthread_mutex_lock(&g_malloc.mutex);
+	void	*res = locked_malloc(size);
+	pthread_mutex_unlock(&g_malloc.mutex);
+	return (res);
 }

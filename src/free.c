@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:09:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:49:39 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:30:22 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_block	*find_block_by_adress_global(void *addr)
 
 #define INVALID_FREE_STR "free(): invalid pointer\nrealloc(): invalid pointer\n"
 
-void	free(void *ptr)
+void	locked_free(void *ptr)
 {
 	if (!ptr)
 		return ;
@@ -44,4 +44,11 @@ void	free(void *ptr)
 
 	block->used = false;
 	block->zone->used_blocks--;
+}
+
+void	free(void *ptr)
+{
+	pthread_mutex_lock(&g_malloc.mutex);
+	locked_free(ptr);
+	pthread_mutex_unlock(&g_malloc.mutex);
 }

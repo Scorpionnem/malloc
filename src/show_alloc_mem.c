@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:56:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 14:20:40 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:24:58 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ static void	print_zone(char *zone_type, t_zone *zone)
 
 void show_alloc_mem(void)
 {
+	pthread_mutex_lock(&g_malloc.mutex);
 	print_zone("TINY ZONES: ", g_malloc.small_zones);
 	print_zone("SMALL ZONES: ", g_malloc.medium_zones);
 	print_zone("LARGE ZONES: ", g_malloc.large_zones);
+	pthread_mutex_unlock(&g_malloc.mutex);
 }

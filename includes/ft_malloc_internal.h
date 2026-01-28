@@ -6,14 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 14:13:45 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 11:26:24 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_INTERNAL_H
 # define FT_MALLOC_INTERNAL_H
 
-# include "ft_malloc.h"
+# include "malloc.h"
 
 # include <stdbool.h>
 # include <stdint.h>
@@ -24,6 +24,7 @@
 # include <sys/mman.h>
 
 # include <stdio.h>
+# include <pthread.h>
 
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
@@ -55,9 +56,10 @@ typedef struct	s_zone
 
 typedef struct	s_malloc
 {
-	t_zone	*small_zones;
-	t_zone	*medium_zones;
-	t_zone	*large_zones;
+	t_zone			*small_zones;
+	t_zone			*medium_zones;
+	t_zone			*large_zones;
+	pthread_mutex_t	mutex;
 }	t_malloc;
 
 #define ALIGN_MEMORY(x, a) (((x) + ((a) - 1)) & ~((a) - 1))
@@ -88,5 +90,8 @@ size_t	get_alloc_size(size_t alloc_size);
 size_t	get_blocks_count(size_t alloc_size);
 
 t_block	*find_block_by_adress_global(void *addr);
+
+void	*locked_malloc(size_t size);
+void	locked_free(void *addr);
 
 #endif

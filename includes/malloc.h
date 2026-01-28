@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 01:56:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 12:11:23 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:53:20 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@
 # include <stddef.h>
 
 void	*malloc(size_t size);
+void	*calloc(size_t size);
 void	free(void *addr);
 void	*realloc(void *ptr, size_t size);
-
-# ifndef SHOW_ALLOC_PRINT_LIMIT
-#  define SHOW_ALLOC_PRINT_LIMIT 256
-# endif
+// Duplicates a pointer previously allocated by malloc and copies its data
+void	*memdup(void *addr);
+// Allocates a new pointer and fills with data from ptr (of size size)
+void	*memconstruct(size_t size, void *ptr);
 
 void	show_alloc_mem(void);
 

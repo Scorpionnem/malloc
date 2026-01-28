@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:09:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 11:30:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:52:35 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ t_block	*find_block_by_adress_global(void *addr)
 
 void	locked_free(void *ptr)
 {
+	#if MALLOC_DEBUG
+		ft_putstr("free called on adress ");
+		ft_putadress(ptr);
+		ft_putstr("\n");
+	#endif
 	if (!ptr)
 		return ;
 	t_block	*block = find_block_by_adress_global(ptr);

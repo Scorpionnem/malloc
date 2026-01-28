@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:56:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 12:16:46 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:52:23 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_strlen(char *str)
 	return (i);
 }
 
-static int	ft_putstr(char *str)
+int	ft_putstr(char *str)
 {
 	if (!str)
 		return (ft_putstr(NULL_STRING));
@@ -55,7 +55,7 @@ static int	ft_putnbr_hex_u(unsigned long int n, char *set)
 	return (ft_putnbr_hex_u(n / 16, set) + ft_putnbr_hex_u(n % 16, set));
 }
 
-static int	ft_putadress(void *n)
+int	ft_putadress(void *n)
 {
 	if (n == 0)
 		return (ft_putstr(NIL_STR));

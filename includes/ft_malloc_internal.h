@@ -6,12 +6,20 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 12:05:21 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:53:25 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_INTERNAL_H
 # define FT_MALLOC_INTERNAL_H
+
+# ifndef SHOW_ALLOC_PRINT_LIMIT
+#  define SHOW_ALLOC_PRINT_LIMIT 256
+# endif
+
+# ifndef MALLOC_DEBUG
+#  define MALLOC_DEBUG 0
+# endif
 
 # include "malloc.h"
 
@@ -28,6 +36,7 @@
 
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 typedef struct	s_block
 {
@@ -98,5 +107,7 @@ void	locked_free(void *addr);
 void	append_block_in_zone(t_zone *zone);
 
 int	ft_putnbr(long n);
+int	ft_putstr(char *str);
+int	ft_putadress(void *n);
 
 #endif

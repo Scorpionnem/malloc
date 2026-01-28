@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:42:04 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 11:55:47 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:54:22 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	append_zone(t_zone **zone, t_zone *new_zone)
 
 void	*locked_malloc(size_t size)
 {
+	#if MALLOC_DEBUG
+		ft_putstr("malloc called with size ");
+		ft_putnbr(size);
+		ft_putstr("\n");
+	#endif
+
 	t_zone	**zone;
 
 	if (size <= SMALL_ALLOC_SIZE)
@@ -48,7 +54,12 @@ void	*locked_malloc(size_t size)
 		size_t	blocks = get_blocks_count(size);
 		t_zone	*new_zone = allocate_zone(alloc, blocks);
 		if (!new_zone) // NOOOO ALLOC FAIL BOZO
+		{
+			#if MALLOC_DEBUG
+				ft_putstr("Fatal Error: Failed to mmap memory");
+			#endif
 			return (NULL);
+		}
 
 		new_zone->group = zone;
 		append_zone(zone, new_zone);

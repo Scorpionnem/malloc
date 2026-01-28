@@ -3,7 +3,8 @@ ifeq ($(HOSTTYPE),)
 endif
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
+DEBUG = 0
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -g -fno-builtin-calloc -DMALLOC_DEBUG=$(DEBUG)
 
 INCLUDES = -I includes
 
@@ -17,12 +18,18 @@ SRCS =	src/malloc.c\
 		src/zone.c\
 		src/utils.c\
 		src/show_alloc_mem.c\
+		src/memdup.c\
+		src/memconstruct.c\
+		src/calloc.c\
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
 all: $(NAME) $(NAMELINK)
+
+debug:
+	make re DEBUG=1
 
 re: fclean all
 

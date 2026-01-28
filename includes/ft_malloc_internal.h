@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 12:28:09 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 12:53:25 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:59:07 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_MALLOC_INTERNAL_H
 
 # ifndef SHOW_ALLOC_PRINT_LIMIT
-#  define SHOW_ALLOC_PRINT_LIMIT 256
+#  define SHOW_ALLOC_PRINT_LIMIT 254
 # endif
 
 # ifndef MALLOC_DEBUG

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:56:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/28 11:57:31 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:16:46 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define NIL_STR		"(nil)"
 # define LOWER_HEX		"0123456789abcdef"
+# define UPPER_HEX		"0123456789ABCDEF"
 # define NULL_STRING	"(null)"
 
 static int	ft_strlen(char *str)
@@ -74,6 +75,19 @@ static void	print_blocks(t_block *block)
 			ft_putstr(" : ");
 			ft_putnbr(block->used_size);
 			ft_putstr(" bytes\n");
+			for (size_t i = 0; i < block->used_size; i++)
+			{
+				ft_putnbr_hex_u(((unsigned char*)addr)[i], LOWER_HEX);
+				ft_putchar(' ');
+				if (i % 32 == 31)
+					ft_putchar('\n');
+				if (i > SHOW_ALLOC_PRINT_LIMIT)
+				{
+					ft_putstr("...");
+					break ;
+				}
+			}
+			ft_putchar('\n');
 		}
 		block = block->next;
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.h                                        :+:      :+:    :+:   */
+/*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 01:56:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/01/27 13:56:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:11:23 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@
 void	*malloc(size_t size);
 void	free(void *addr);
 void	*realloc(void *ptr, size_t size);
+
+# ifndef SHOW_ALLOC_PRINT_LIMIT
+#  define SHOW_ALLOC_PRINT_LIMIT 256
+# endif
+
 void	show_alloc_mem(void);
 
 #endif
